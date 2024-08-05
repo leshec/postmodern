@@ -1,3 +1,5 @@
+mod words;
+
 use actix_files as fs;
 use actix_web::{
     delete, get, patch, post, put, web, App, HttpRequest, HttpResponse, HttpServer, Responder,
@@ -29,6 +31,15 @@ async fn info() -> impl Responder {
     HttpResponse::Ok().body(page_content)
 }
 
+#[get("/words")]
+async fn words_endpoint() -> impl Responder {
+    let words_data = words::get_words();
+    let mut context = tera::Context::new();
+    context.insert("words", &words_data);
+    let page_content = TEMPLATES.render("words.html", &context).unwrap();
+    HttpResponse::Ok().body(page_content)
+}
+
 async fn favicon(_req: HttpRequest) -> Result<fs::NamedFile, actix_web::error::Error> {
     Ok(fs::NamedFile::open("images/favicon.ico")?)
 }
@@ -41,6 +52,7 @@ async fn main() -> std::io::Result<()> {
             .route("/favicon.ico", web::get().to(favicon))
             .service(index)
             .service(info)
+            .service(words_endpoint)
     })
     .bind(("127.0.0.1", 42069))?
     .run()
