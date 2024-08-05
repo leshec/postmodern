@@ -30,14 +30,14 @@ async fn info() -> impl Responder {
 }
 
 async fn favicon(_req: HttpRequest) -> Result<fs::NamedFile, actix_web::error::Error> {
-    Ok(fs::NamedFile::open("./images/favicon.ico")?)
+    Ok(fs::NamedFile::open("images/favicon.ico")?)
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .service(fs::Files::new("/images", "./images").show_files_listing())
+            .service(fs::Files::new("/images", "images").show_files_listing())
             .route("/favicon.ico", web::get().to(favicon))
             .service(index)
             .service(info)
