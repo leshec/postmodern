@@ -1094,6 +1094,7 @@ dependencies = [
  "actix-files",
  "actix-web",
  "lazy_static",
+ "rand",
  "tera",
 ]
 
