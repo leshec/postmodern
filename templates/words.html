@@ -2,7 +2,22 @@
 
 {% block content %}
 
-{{ words }}
+  <p id="italian">
+{{ word1 }}
+  </p>
+
+  <p id="english" style="visibility: hidden";>
+  {{ word2 }}
+  </p>
+  
+  <button onclick="revealAnswer()">Reveal</button>
+
+ <script> 
+  function revealAnswer() {
+    document.getElementById("english").style.visibility = "visible";
+  }
+  </script>
+  
 
 {% endblock %}
 

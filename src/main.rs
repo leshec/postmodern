@@ -33,9 +33,10 @@ async fn info() -> impl Responder {
 
 #[get("/words")]
 async fn words_endpoint() -> impl Responder {
-    let words_data = words::get_words();
+    let (word1, word2) = words::get_random_word_pair();
     let mut context = tera::Context::new();
-    context.insert("words", &words_data);
+    context.insert("word1", &word1);
+    context.insert("word2", &word2);
     let page_content = TEMPLATES.render("words.html", &context).unwrap();
     HttpResponse::Ok().body(page_content)
 }
