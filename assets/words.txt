@@ -85,7 +85,7 @@ becco,beak
 zanna,tusk
 ala,wing
 bocca,mouth
-spina,dorsal
+spina,spine
 branchie,gills
 antenna,antenna
 zampa,leg
