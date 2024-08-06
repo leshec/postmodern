@@ -1,20 +1,27 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <title>Rustmx</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.2">
 
-    <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
+<head>
+  <title>Rustmx</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://unpkg.com/missing.css@1.1.2">
+  <script src="https://unpkg.com/htmx.org@2.0.1"
+    integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/"
+    crossorigin="anonymous"></script>
 </head>
+
 <body hx-boost="true">
-<main>
+  <main>
     <header>
-        <header>
-          <h1>Rustmx</h1>
-        </header>
-        {% block content %} {% endblock %}
+      <h1>Rustmx</h1>
     </header>
-</main>
+
+    {% block content %} {% endblock %}
+
+    </header>
+  </main>
 </body>
+
 </html>
