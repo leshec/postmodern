@@ -3,13 +3,9 @@
 {% block content %}
 
   <div id="word-pair">
-  <p id="italian">
-{{ word1 }}
-  </p>
 
-  <p id="english" style="visibility: hidden";>
-  {{ word2 }}
-  </p>
+  {% include 'word_pair.html' %}
+
   </div>
   
   <button onclick="revealAnswer()">Reveal</button>
