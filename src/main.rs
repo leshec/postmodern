@@ -59,12 +59,13 @@ async fn favicon(_req: HttpRequest) -> Result<fs::NamedFile, actix_web::error::E
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .service(fs::Files::new("/image", "./image").show_files_listing())
             .route("/favicon.ico", web::get().to(favicon))
             .service(index)
             .service(info)
             .service(words_endpoint)
             .service(word_pair_endpoint)
+            .service(fs::Files::new("/assets", "./assets").show_files_listing())
+            .service(fs::Files::new("/image", "./image").show_files_listing())
     })
     .bind(("127.0.0.1", 42069))?
     .run()
