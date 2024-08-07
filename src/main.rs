@@ -41,19 +41,30 @@ async fn words_endpoint() -> impl Responder {
     HttpResponse::Ok().body(page_content)
 }
 
+#[get("/word-pair")]
+async fn word_pair_endpoint() -> impl Responder {
+    let (word1, word2) = words::get_random_word_pair();
+    let mut context = tera::Context::new();
+    context.insert("word1", &word1);
+    context.insert("word2", &word2);
+    let page_content = TEMPLATES.render("word_pair.html", &context).unwrap();
+    HttpResponse::Ok().body(page_content)
+}
+
 async fn favicon(_req: HttpRequest) -> Result<fs::NamedFile, actix_web::error::Error> {
-    Ok(fs::NamedFile::open("images/favicon.ico")?)
+    Ok(fs::NamedFile::open("image/favicon.ico")?)
 }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .service(fs::Files::new("/images", "images").show_files_listing())
+            .service(fs::Files::new("/image", "./image").show_files_listing())
             .route("/favicon.ico", web::get().to(favicon))
             .service(index)
             .service(info)
             .service(words_endpoint)
+            .service(word_pair_endpoint)
     })
     .bind(("127.0.0.1", 42069))?
     .run()
