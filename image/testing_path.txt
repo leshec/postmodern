@@ -1,0 +1,1 @@
+hello from inside image path, should see testing_path.txt
