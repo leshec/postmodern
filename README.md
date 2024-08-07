@@ -7,11 +7,12 @@
 
 ## **Todo:**
 
-1) Favicon: Took me a while to add a Chewie favicon. Add a credit or find an alternative.
-2) Finish the youtube walkthrough as is
-3) Figure how to deploy with shuttle
-4) Use it to port some of my projects
-5) Make some notes for later
+- [ ] Favicon: Took me a while to add a Chewie favicon. Add a credit or find an alternative.
+- [x] Finish the youtube walkthrough as is
+- [ ] Figure how to deploy with shuttle
+- [ ] Use it to port some of my projects
+- [ ] Make some notes for later
+- [ ] maybe add styling in the layout rather than inline 
 
 
 ## **HTMX Web app**
