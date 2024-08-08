@@ -67,7 +67,7 @@ async fn main() -> std::io::Result<()> {
             .service(fs::Files::new("/assets", "./assets").show_files_listing())
             .service(fs::Files::new("/image", "./image").show_files_listing())
     })
-    .bind(("127.0.0.1", 42069))?
+    .bind(("0.0.0.0", 10000))?
     .run()
     .await
 }
