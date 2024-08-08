@@ -4,6 +4,7 @@
 
 **Source: see **CodeScope** YouTube video (https://www.youtube.com/watch?v=qCXFi4Jg11c&t=1784s)**
 
+view here: (https://postmodern.onrender.com/words)
 
 ## **Todo:**
 
@@ -21,7 +22,7 @@
 - HTML templating engine: tera (https://docs.rs/tera/latest/tera)
 - Basic styling: missing.style (https://missing.style/)
 - Hotreloading: cargo-watch (https://github.com/watchexec/cargo-watch)
-
+- HTMX: (https://htmx.org/)
 
 ## **HTMX Example app**
 
@@ -32,4 +33,7 @@
 
 - CodeScope Youtuber 
 - Source code (https://gitlab.com/codescope-reference/rustmx)
+
+
+See also axum and shuttle version (https://github.com/leshec/italian2english)
 
