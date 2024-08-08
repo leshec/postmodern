@@ -1,15 +1,12 @@
 [package]
-name = "postmodern_axum"
+name = "postmodern"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+actix-web = "4"
 tera = "1"
 lazy_static = "1.5.0"
+actix-files = "0.6.6"
 rand = "0.8.5"
-axum = "0.7.5"
-tokio = { version = "1.39.2", features = ["full"] }
-tower = "0.4.13"
-tower-http = { version = "=0.5.2", features = ["fs"] }
-shuttle-runtime = "0.47.0"
-shuttle-axum = "0.47.0"
+

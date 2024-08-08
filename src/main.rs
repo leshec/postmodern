@@ -1,14 +1,12 @@
 mod words;
 
-use axum::{
-    http::{header, Response, StatusCode},
-    response::{Html, IntoResponse},
-    routing::{get, post},
-    Router,
+use actix_files as fs;
+use actix_web::{
+    delete, get, patch, post, put, web, App, HttpRequest, HttpResponse, HttpServer, Responder,
+    Result,
 };
 use lazy_static::lazy_static;
 use tera::Tera;
-use tower_http::services::ServeDir;
 
 lazy_static! {
     pub static ref TEMPLATES: Tera = {
@@ -18,56 +16,58 @@ lazy_static! {
     };
 }
 
-async fn index() -> Html<String> {
+#[get("/")]
+async fn index() -> impl Responder {
     let mut context = tera::Context::new();
     context.insert("message_from_rust", "hello from rust");
     let page_content = TEMPLATES.render("index.html", &context).unwrap();
-    Html(page_content)
+    HttpResponse::Ok().body(page_content)
 }
 
-async fn info() -> Html<String> {
+#[get("/info")]
+async fn info() -> impl Responder {
     let context = tera::Context::new();
     let page_content = TEMPLATES.render("info.html", &context).unwrap();
-    Html(page_content)
+    HttpResponse::Ok().body(page_content)
 }
 
-async fn handler_404() -> impl IntoResponse {
-    (StatusCode::NOT_FOUND, "nothing to see here")
-}
-
-async fn words_endpoint() -> Html<String> {
+#[get("/words")]
+async fn words_endpoint() -> impl Responder {
     let (word1, word2) = words::get_random_word_pair();
     let mut context = tera::Context::new();
     context.insert("word1", &word1);
     context.insert("word2", &word2);
     let page_content = TEMPLATES.render("words.html", &context).unwrap();
-    Html(page_content)
+    HttpResponse::Ok().body(page_content)
 }
 
-async fn word_pair_endpoint() -> Html<String> {
+#[get("/word-pair")]
+async fn word_pair_endpoint() -> impl Responder {
     let (word1, word2) = words::get_random_word_pair();
     let mut context = tera::Context::new();
     context.insert("word1", &word1);
     context.insert("word2", &word2);
     let page_content = TEMPLATES.render("word_pair.html", &context).unwrap();
-    Html(page_content)
+    HttpResponse::Ok().body(page_content)
 }
 
-#[tokio::main]
-async fn main() {
-    // build our application with a route
-    let app = Router::new()
-        .route("/", get(index))
-        .route("/info", get(info))
-        .route("/word-pair", get(word_pair_endpoint))
-        .route("/words", get(words_endpoint));
+async fn favicon(_req: HttpRequest) -> Result<fs::NamedFile, actix_web::error::Error> {
+    Ok(fs::NamedFile::open("image/favicon.ico")?)
+}
 
-    // add a fallback service for handling routes to unknown paths
-    let app = app.fallback(handler_404);
-
-    // run our app with hyper, listening globally on port 3000
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:10000")
-        .await
-        .unwrap();
-    axum::serve(listener, app).await.unwrap();
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .route("/favicon.ico", web::get().to(favicon))
+            .service(index)
+            .service(info)
+            .service(words_endpoint)
+            .service(word_pair_endpoint)
+            .service(fs::Files::new("/assets", "./assets").show_files_listing())
+            .service(fs::Files::new("/image", "./image").show_files_listing())
+    })
+    .bind(("127.0.0.1", 42069))?
+    .run()
+    .await
 }
